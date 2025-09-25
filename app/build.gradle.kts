@@ -12,13 +12,13 @@ plugins {
 
 android {
     namespace = "com.example.imparktcc"
-    compileSdk = 36
+    compileSdk = 34
 
 
     defaultConfig {
         applicationId = "com.example.imparktcc"
-        minSdk = 24
-        targetSdk = 36
+        minSdk = 21
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -37,6 +37,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+
     }
     kotlinOptions {
         jvmTarget = "11"
