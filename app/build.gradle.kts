@@ -7,8 +7,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id ("com.android.application")
-    id ("org.jetbrains.kotlin.android")
+
 }
 
 android {
@@ -68,10 +67,12 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.compose.ui:ui:1.6.4")
+    implementation("androidx.compose.material3:material3:1.2.1")
+    implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
+
 
 }
 
