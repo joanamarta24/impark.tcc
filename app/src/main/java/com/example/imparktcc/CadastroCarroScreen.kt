@@ -101,7 +101,6 @@ fun CadastroCarroScreen(
             }
         }
 
-        // Fundo escurecido + notificação animada
         AnimatedVisibility(
             visible = visible,
             enter = fadeIn(),
