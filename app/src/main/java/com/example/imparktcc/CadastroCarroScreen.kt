@@ -91,7 +91,7 @@ fun CadastroCarroScreen(
                 exit = slideOutVertically() + shrinkVertically() + fadeOut()
             ) {
                 Text(
-                    text = "✅ Carro cadastrado com sucesso!",
+                    text = " Carro cadastrado com sucesso!",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
@@ -123,7 +123,7 @@ fun CadastroCarroScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "🚗 Carro cadastrado!",
+                        text = " Carro cadastrado!",
                         color = Color.White,
                         style = MaterialTheme.typography.titleMedium
                     )
@@ -136,7 +136,7 @@ fun CadastroCarroScreen(
             delay(3000)
             sucesso = false
             visible = false
-            onCadastroConcluido() // volta para a tela anterior
+            onCadastroConcluido()
         }
     }
 }
