@@ -4,6 +4,8 @@ import com.example.imparktcc.model.Carro
 import com.example.imparktcc.model.Usuario
 import kotlinx.coroutines.delay
 
+
+
 class CadastroRepository {
     suspend fun cadastrarUsuario(usuario: Usuario): Boolean{
         // Simula chamada API/banco de dados
