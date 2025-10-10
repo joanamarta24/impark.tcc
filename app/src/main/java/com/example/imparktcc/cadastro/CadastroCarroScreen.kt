@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.imparktcc.ui.theme.ImparktccTheme
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -147,4 +146,9 @@ fun PreviewCadastroCarro() {
     ImparktccTheme {
         CadastroCarroScreen()
     }
+}
+
+@Composable
+fun ImparktccTheme(content: @Composable () -> CadastroCarroScreen) {
+    TODO("Not yet implemented")
 }
