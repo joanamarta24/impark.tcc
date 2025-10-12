@@ -20,5 +20,28 @@ class CadastroViewModel : ViewModel (){
             camposPreenchidos = true
         )
     }
-
+    fun updateEmail(email:String){
+        _uiState.value = _uiState.value.copy(
+            email = email,
+            camposPreenchidos = true
+        )
+    }
+    fun updateSenha(senha: String) {
+        _uiState.value = _uiState.value.copy(
+            senha = senha,
+            senhaValida = true,
+            senhasCoincidem = true
+        )
+    }
+    fun updateConfirmarSenha(confirmarSenha: String) {
+        _uiState.value = _uiState.value.copy(
+            confirmarSenha = confirmarSenha,
+            senhasCoincidem = true
+        )
+    }
+    fun cadastrarUsuario(onSuccess: () -> Unit){
+        if(validarCampos()){
+            _uiState
+        }
+    }
 }
