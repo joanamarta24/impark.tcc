@@ -149,6 +149,10 @@ fun PreviewCadastroCarro() {
 }
 
 @Composable
-fun ImparktccTheme(content: @Composable () -> CadastroCarroScreen) {
-    TODO("Not yet implemented")
+fun ImparktccTheme(content: @Composable () -> Unit) {
+    MaterialTheme(
+        colorScheme = lightColorScheme(),
+        typography = Typography(),
+        content = content
+    )
 }
