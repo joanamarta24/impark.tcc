@@ -293,3 +293,4 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
         }
 
     }
+}
