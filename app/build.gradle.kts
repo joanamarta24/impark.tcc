@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.example.imparktcc"
-    compileSdk = 34  // 🔹 SDK mais estável atualmente
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.imparktcc"
@@ -49,7 +49,6 @@ android {
 
 dependencies {
     //nav
-
     implementation(libs.androidx.navigation.compose)
 
     implementation("androidx.core:core-ktx:1.12.0")

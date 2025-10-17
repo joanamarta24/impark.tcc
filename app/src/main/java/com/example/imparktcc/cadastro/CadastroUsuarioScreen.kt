@@ -84,8 +84,6 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
 
         return camposPreenchidosValidos && emailValidoLocal && senhaValidaLocal && senhasCoincidemLocal
     }
-
-    // Função realizarCadastro movida para fora do Scaffold
     fun realizarCadastro() {
         if (validarCampos()) {
             isLoading = true
@@ -132,7 +130,6 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            // Campo Nome
             OutlinedTextField(
                 value = nome,
                 onValueChange = {
@@ -148,8 +145,6 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
                     }
                 }
             )
-
-            // Campo do email
             OutlinedTextField(
                 value = email,
                 onValueChange = {
@@ -165,8 +160,6 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
                     }
                 }
             )
-
-            // Campo Senha
             OutlinedTextField(
                 value = senha,
                 onValueChange = {
@@ -184,8 +177,6 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
                     }
                 }
             )
-
-            // Campo Confirmar Senha
             OutlinedTextField(
                 value = confirmarSenha,
                 onValueChange = {
@@ -202,8 +193,6 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
                     }
                 }
             )
-
-            // Mensagem de erro geral
             if (mensagemErro.isNotEmpty()) {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -216,8 +205,6 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
                     )
                 }
             }
-
-            // Feedback de sucesso
             AnimatedVisibility(
                 visible = cadastroSucesso,
                 enter = fadeIn() + expandVertically(),
@@ -246,7 +233,6 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Botão de cadastro
             Button(
                 onClick = { realizarCadastro() },
                 modifier = Modifier.fillMaxWidth(),
@@ -264,16 +250,12 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
                     Text("Cadastrar Usuário")
                 }
             }
-
-            // Botão para ir para cadastro de carro
             TextButton(
                 onClick = { navController.navigate("carro") },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Já tem conta? Ir para Cadastro de Carro")
             }
-
-            // Informações sobre os campos
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
@@ -299,8 +281,6 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
         }
     }
 }
-
-// Função auxiliar para simular chamada API - CORRIGIDA
 fun simulateApiCall(callback: @Composable (Boolean) -> Unit) {
     // Simula uma chamada de rede/banco de dados
     Thread {
@@ -311,10 +291,10 @@ fun simulateApiCall(callback: @Composable (Boolean) -> Unit) {
     }.start()
 }
 
-// Função ScrollBoxesSmooth adicionada
+
 @Composable
 private fun ScrollBoxesSmooth() {
-    // Smoothly scroll 100px on first composition
+
     val state = rememberScrollState()
     LaunchedEffect(Unit) {
         state.animateScrollTo(100)
