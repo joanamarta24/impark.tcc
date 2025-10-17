@@ -1,6 +1,5 @@
 package com.example.imparktcc.ui.viewmodel
 
-import java.sql.Timestamp
 
 data class CadastroUiState(
     // Campos do formulário
