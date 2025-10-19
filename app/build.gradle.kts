@@ -88,6 +88,7 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.8.3")
     implementation("androidx.compose.animation:animation")
+    implementation(libs.androidx.room.ktx)
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
