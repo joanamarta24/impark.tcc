@@ -4,6 +4,8 @@ import android.R
 import android.provider.ContactsContract.DisplayNameSources.EMAIL
 
 
+
+
 data class CadastroUiState(
     // Campos do formulário
     val nome: String ="",
@@ -110,9 +112,17 @@ data class CadastroUiState(
 
     }
     fun getMensagemErro(campo: CampoFocado? = null):String?{
-        return while (campo ?: campoComFoco){
-            CampoFocado.NOME -> if(nome.isBlank()) "Nome é obrigatorio" else null
-            CampoFocado>EMAIL -> if
+      val campoAlvo = campo ?: campoComFoco
+
+        return while (campoAlvo){
+            CampoFocado.NOME -> when {
+                nome.isBlank() -> "Nome é obrigatorio"
+                nome.length < 2 -> "Nome deve ter pelo menos 2 Caracteres"
+                nome.length > 100 -> "Nome muito longo"
+                !nome.contains("") -> "Digite nome e sobrenome"
+                else -> null
+
+            }
         }
     }
 
