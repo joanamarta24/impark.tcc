@@ -42,6 +42,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
+import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,6 +85,7 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
 
         return camposPreenchidosValidos && emailValidoLocal && senhaValidaLocal && senhasCoincidemLocal
     }
+
     fun realizarCadastro() {
         if (validarCampos()) {
             isLoading = true
@@ -111,6 +113,7 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
             mensagemErro = "Por favor, corrija os erros nos campos acima."
         }
     }
+
 
     Scaffold(
         topBar = {
@@ -281,20 +284,32 @@ fun CadastroUsuarioScreen(navController: NavController, function: @Composable ()
         }
     }
 }
-fun simulateApiCall(callback: @Composable (Boolean) -> Unit) {
-    // Simula uma chamada de rede/banco de dados
+
+// Função simulateApiCall corrigida
+fun simulateApiCall(
+    callback: (Boolean) -> Unit,
+    delayMillis: Long = 2000,
+    successRate: Double = 0.9,
+    simulateNetworkError: Boolean = false // ✅ adicionada aqui
+) {
     Thread {
-        Thread.sleep(2000) // Simula delay de 2 segundos
-        // 90% de chance de sucesso para demonstração
-        val sucesso = (0..9).random() != 0
-        callback(sucesso)
+        try {
+            Thread.sleep(delayMillis)
+            if (simulateNetworkError && Random.nextInt(0, 10) == 0) {
+                throw RuntimeException("Simulated network error")
+            }
+            val sucesso = Random.nextDouble() < successRate
+            callback(sucesso)
+        } catch (e: InterruptedException) {
+            callback(false)
+        } catch (e: Exception) {
+            callback(false)
+        }
     }.start()
 }
 
-
 @Composable
 private fun ScrollBoxesSmooth() {
-
     val state = rememberScrollState()
     LaunchedEffect(Unit) {
         state.animateScrollTo(100)
