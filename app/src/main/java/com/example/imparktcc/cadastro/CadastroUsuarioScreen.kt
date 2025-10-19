@@ -290,7 +290,7 @@ fun simulateApiCall(
     callback: (Boolean) -> Unit,
     delayMillis: Long = 2000,
     successRate: Double = 0.9,
-    simulateNetworkError: Boolean = false // ✅ adicionada aqui
+    simulateNetworkError: Boolean = false
 ) {
     Thread {
         try {

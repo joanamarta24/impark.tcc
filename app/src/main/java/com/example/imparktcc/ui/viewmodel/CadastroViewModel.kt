@@ -3,6 +3,7 @@ package com.example.imparktcc.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.imparktcc.repository.CadastroRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -106,5 +107,55 @@ class CadastroViewModel @Inject constructor(
             "sucesso" to state.cadastroSucesso,
             "campos_preenchidos" to state.camposPreenchidos
         )
+    }
+    fun realizarCadastro() {
+        val currentState = _uiState.value
+
+        if (!currentState.formularioValido) {
+            _uiState.update {
+                it.copy(
+                    mensagemErro = "Por favor, corrija os erros nos campos acima.",
+                    tentativasCadastro = it.tentativasCadastro + 1
+                )
+            }
+            return
+        }
+
+        // Inicia o loading
+        _uiState.update { it.copyIniciandoCadastro() }
+
+        // Simula a chamada da API
+        simulateApiCall { sucesso ->
+            _uiState.update { it.copyComResultadoCadastro(sucesso) }
+        }
+    }
+
+    fun onNavegacaoConcluida() {
+        _uiState.update { it.copyComNavegacaoConcluida() }
+    }
+
+    // Outras funções...
+    fun atualizarNome(nome: String) {
+        _uiState.update { it.copyComValidacao(nome = nome) }
+    }
+
+    fun atualizarEmail(email: String) {
+        _uiState.update { it.copyComValidacao(email = email) }
+    }
+
+    fun atualizarSenha(senha: String) {
+        _uiState.update { it.copyComValidacao(senha = senha) }
+    }
+
+    fun atualizarConfirmarSenha(confirmarSenha: String) {
+        _uiState.update { it.copyComValidacao(confirmarSenha = confirmarSenha) }
+    }
+
+    private fun simulateApiCall(callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            delay(2000) // Simula delay de rede
+            val sucesso = (0..9).random() != 0 // 90% de sucesso
+            callback(sucesso)
+        }
     }
 }

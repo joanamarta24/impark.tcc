@@ -1,11 +1,15 @@
 package com.example.imparktcc.ui.viewmodel
 
 import com.example.imparktcc.model.Usuario
+import kotlin.compareTo
+import kotlin.div
+import kotlin.plus
+import kotlin.text.compareTo
+
 
 enum class CampoFocado {
     NOME, EMAIL, SENHA, CONFIRMAR_SENHA, TERMOS, POLITICA, NONE
 }
-
 data class CadastroUiState(
     // Campos do formulário
     val nome: String = "",
@@ -138,12 +142,14 @@ data class CadastroUiState(
                 !nome.contains(" ") -> "Digite nome e sobrenome"
                 else -> null
             }
+
             CampoFocado.EMAIL -> when {
                 email.isBlank() -> "E-mail é obrigatório"
                 !emailValido -> "Digite um e-mail válido (exemplo@email.com)"
                 email.length > 150 -> "E-mail muito longo"
                 else -> null
             }
+
             CampoFocado.SENHA -> when {
                 senha.isBlank() -> "Senha é obrigatória"
                 !senhaValida -> "Senha deve ter 6+ caracteres com letras e números"
@@ -151,19 +157,23 @@ data class CadastroUiState(
                 forcaSenha <= 1 -> "Senha muito fraca. Use letras maiúsculas, minúsculas e números"
                 else -> null
             }
+
             CampoFocado.CONFIRMAR_SENHA -> when {
                 confirmarSenha.isBlank() -> "Confirme sua senha"
                 !senhasCoincidem -> "As senhas não coincidem"
                 else -> null
             }
+
             CampoFocado.TERMOS -> when {
                 !termosAceito -> "Você deve aceitar os termos e condições"
                 else -> null
             }
+
             CampoFocado.POLITICA -> when {
                 !politicaPrivacidadeAceita -> "Você deve aceitar a política de privacidade"
                 else -> null
             }
+
             CampoFocado.NONE -> null
             null -> null
         }
@@ -181,6 +191,7 @@ data class CadastroUiState(
                 4 -> "Senha forte - excelente!"
                 else -> "Digite uma senha"
             }
+
             CampoFocado.CONFIRMAR_SENHA -> "Digite a mesma senha para confirmação"
             CampoFocado.TERMOS -> "Leia e aceite os termos para continuar"
             CampoFocado.POLITICA -> "Leia e aceite a política de privacidade"
@@ -278,6 +289,7 @@ data class CadastroUiState(
             return strength.coerceAtMost(4)
         }
     }
+
     fun realizarCadastro(
         onNavigateToCarro: () -> Unit,
         simulateApiCall: (callback: (Boolean) -> Unit) -> Unit
@@ -343,3 +355,65 @@ data class CadastroUiState(
             cadastroSucesso = false
         )
     }
+
+    fun realizarCadastro(
+        onNavigateToCarro: () -> Unit,
+        simulateApiCall: (callback: (Boolean) -> Unit) -> Unit
+    ): CadastroUiState {
+        return if (formularioValido) {
+            // Estado de loading
+            this.copy(
+                isLoading = true,
+                mensagemErro = "",
+                timestampInicioCadastro = System.currentTimeMillis()
+            ).also { loadingState ->
+
+                simulateApiCall { sucesso ->
+
+                    if (sucesso) {
+
+                    } else {
+
+                    }
+                }
+            }
+        } else {
+            // Retorna estado com erro de validação
+            this.copy(
+                mensagemErro = "Por favor, corrija os erros nos campos acima.",
+                tentativasCadastro = tentativasCadastro + 1
+            )
+        }
+    }
+    fun copyIniciandoCadastro(): CadastroUiState{
+        return this.copy(
+            isLoading = true,
+            mensagemErro = "",
+            timestampInicioCadastro = System.currentTimeMillis()
+        )
+    }
+    fun copyComResultadoCadastro(sucesso: Boolean): CadastroUiState{
+        return if (sucesso){
+            this.copyComSucesso()
+        }else{
+            this.copy(
+                isLoading = false,
+                mensagemErro = "Falha no cadastro. Tente novamente mais tarde.",
+                tentativasCadastro = tentativasCadastro + 1,
+                timestampFimCadastro = System.currentTimeMillis()
+            )
+        }
+    }
+    fun copyComNavegacaoConcluida(): CadastroUiState{
+        return this.copy(
+            nome = "",
+            email = "",
+            senha = "",
+            confirmarSenha = "",
+            termosAceito = false,
+            politicaPrivacidadeAceita = false,
+            cadastroSucesso = false
+        )
+    }
+}
+
