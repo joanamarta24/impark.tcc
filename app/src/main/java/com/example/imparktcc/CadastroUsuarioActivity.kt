@@ -19,6 +19,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -144,6 +145,11 @@ fun CadastroCarroScreen() {
 @Composable
 fun PreviewCadastroUsuario() {
     ImparktccTheme { CadastroUsuarioScreen(rememberNavController()) }
+}
+
+@Composable
+fun CadastroUsuarioScreen(x0: NavHostController) {
+    TODO("Not yet implemented")
 }
 
 @Preview(showBackground = true)

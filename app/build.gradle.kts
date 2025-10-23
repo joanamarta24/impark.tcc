@@ -64,6 +64,12 @@ android {
 }
 
 dependencies {
+    implementation("androidx.compose.ui:ui:1.7.3")
+    implementation("androidx.compose.material3:material3:1.3.0")
+    implementation("androidx.compose.animation:animation:1.7.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.6")
+    implementation("androidx.activity:activity-compose:1.9.2")
+
     // Navigation
     implementation(libs.androidx.navigation.compose)
 
@@ -89,6 +95,11 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.8.3")
     implementation("androidx.compose.animation:animation")
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.animation)
+    implementation(libs.androidx.compose.foundation.layout.android)
+    implementation(libs.androidx.compose.foundation.layout.android)
+    implementation(libs.androidx.compose.foundation.android)
+    implementation(libs.androidx.compose.foundation.layout.android)
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

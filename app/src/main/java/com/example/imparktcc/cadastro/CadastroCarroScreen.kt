@@ -1,27 +1,51 @@
 package com.example.imparktcc.ui
 
-import androidx.compose.animation.*
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import java.lang.reflect.Modifier
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CadastroCarroScreen(
     onCadastroConcluido: () -> Unit = {}
 ) {
-    var modelo by remember { mutableStateOf(TextFieldValue("")) }
-    var placa by remember { mutableStateOf(TextFieldValue("")) }
-    var cor by remember { mutableStateOf(TextFieldValue("")) }
+    var modelo by remember { mutableStateOf("") }
+    var placa by remember { mutableStateOf("") }
+    var cor by remember { mutableStateOf("") }
     var sucesso by remember { mutableStateOf(false) }
     var visible by remember { mutableStateOf(false) }
     val density = LocalDensity.current
@@ -71,10 +95,14 @@ fun CadastroCarroScreen(
 
             Button(
                 onClick = {
-                    sucesso = true
-                    visible = true
+                    // Validação básica antes de cadastrar
+                    if (modelo.isNotBlank() && placa.isNotBlank() && cor.isNotBlank()) {
+                        sucesso = true
+                        visible = true
+                    }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                enabled = modelo.isNotBlank() && placa.isNotBlank() && cor.isNotBlank()
             ) {
                 Text(text = "Cadastrar")
             }
@@ -84,13 +112,15 @@ fun CadastroCarroScreen(
             // Mensagem animada simples
             AnimatedVisibility(
                 visible = sucesso,
-                enter = slideInVertically {
-                    with(density) { -40.dp.roundToPx() }
-                } + expandVertically(expandFrom = Alignment.Top) + fadeIn(initialAlpha = 0.3f),
+                enter = slideInVertically(
+                    initialOffsetY = { with(density) { -40.dp.roundToPx() } }
+                ) + expandVertically(
+                    expandFrom = LineHeightStyle.Alignment.Top
+                ) + fadeIn(initialAlpha = 0.3f),
                 exit = slideOutVertically() + shrinkVertically() + fadeOut()
             ) {
                 Text(
-                    text = " Carro cadastrado com sucesso!",
+                    text = "Carro cadastrado com sucesso!",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
@@ -100,29 +130,26 @@ fun CadastroCarroScreen(
             }
         }
 
+        // Overlay de sucesso
         AnimatedVisibility(
             visible = visible,
-            enter = fadeIn(),
-            exit = fadeOut()
+            enter = fadeIn(animationSpec = tween(500)),
+            exit = fadeOut(animationSpec = tween(500))
         ) {
             Box(
-                Modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .background(Color(0xAA000000))
             ) {
                 Box(
-                    Modifier
+                    modifier = Modifier
                         .align(Alignment.Center)
-                        .animateEnterExit(
-                            enter = slideInVertically(),
-                            exit = slideOutVertically()
-                        )
                         .sizeIn(minWidth = 256.dp, minHeight = 64.dp)
-                        .background(Color.Red),
+                        .background(MaterialTheme.colorScheme.primary), // Cor corrigida
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = " Carro cadastrado!",
+                        text = "Carro cadastrado!",
                         color = Color.White,
                         style = MaterialTheme.typography.titleMedium
                     )
@@ -130,9 +157,11 @@ fun CadastroCarroScreen(
             }
         }
     }
+
+    // LaunchedEffect para navegação automática
     LaunchedEffect(sucesso) {
         if (sucesso) {
-            delay(3000)
+            delay(2000) // Reduzido para 2 segundos
             sucesso = false
             visible = false
             onCadastroConcluido()
@@ -143,16 +172,7 @@ fun CadastroCarroScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewCadastroCarro() {
-    ImparktccTheme {
+    MaterialTheme {
         CadastroCarroScreen()
     }
-}
-
-@Composable
-fun ImparktccTheme(content: @Composable () -> Unit) {
-    MaterialTheme(
-        colorScheme = lightColorScheme(),
-        typography = Typography(),
-        content = content
-    )
 }
